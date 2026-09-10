@@ -17,6 +17,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
       - name: Prepare clean candidate and regression tests
         run: |
           git switch -C fix/mixed-ip-collapse origin/develop

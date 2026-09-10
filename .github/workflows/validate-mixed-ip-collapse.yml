@@ -147,15 +147,20 @@ jobs:
 
           path = Path("src/lambda_handler.py")
           source = path.read_text()
-          old = '        for net in collapse_addresses(config["ip_set"]):\n            object_contents += str(net) + "\\n"'
-          new = '''        for ip_version in (4, 6):
-              networks = (
-                  network
-                  for network in config["ip_set"]
-                  if network.version == ip_version
-              )
-              for net in collapse_addresses(networks):
-                  object_contents += str(net) + "\\n"'''
+          old = (
+              '        for net in collapse_addresses(config["ip_set"]):\n'
+              '            object_contents += str(net) + "\\n"'
+          )
+          new = (
+              '        for ip_version in (4, 6):\n'
+              '            networks = (\n'
+              '                network\n'
+              '                for network in config["ip_set"]\n'
+              '                if network.version == ip_version\n'
+              '            )\n'
+              '            for net in collapse_addresses(networks):\n'
+              '                object_contents += str(net) + "\\n"'
+          )
           assert source.count(old) == 1
           path.write_text(source.replace(old, new))
           PY

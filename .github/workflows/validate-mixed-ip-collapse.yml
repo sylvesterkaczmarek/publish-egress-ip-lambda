@@ -132,7 +132,7 @@ jobs:
           PY
 
       - name: Install test dependencies
-        run: python -m pip install --disable-pip-version-check -r requirements-test.txt
+        run: python -m pip install --disable-pip-version-check -r requirements-test.txt boto3
 
       - name: Reproduce failure before the fix
         run: |
